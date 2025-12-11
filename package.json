@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "fbjsx",
+=======
+  "name": "placement-portal",
+>>>>>>> 2ba3b8fe8d16024817ed44cca7ca549c62421b81
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +13,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@fullcalendar/daygrid": "^6.1.19",
     "@fullcalendar/interaction": "^6.1.19",
     "@fullcalendar/react": "^6.1.19",
@@ -18,13 +23,29 @@
     "next": "16.0.7",
     "react": "19.2.0",
     "react-datepicker": "^9.0.0",
+=======
+    "bootstrap": "^5.3.8",
+    "firebase": "^12.6.0",
+    "next": "16.0.6",
+    "react": "19.2.0",
+>>>>>>> 2ba3b8fe8d16024817ed44cca7ca549c62421b81
     "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+<<<<<<< HEAD
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
     "prisma": "^7.1.0",
     "tailwindcss": "^4"
+=======
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+>>>>>>> 2ba3b8fe8d16024817ed44cca7ca549c62421b81
   }
 }
