@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-<<<<<<< HEAD
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,25 +17,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-=======
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
->>>>>>> 2ba3b8fe8d16024817ed44cca7ca549c62421b81
     "plugins": [
       {
         "name": "next"
       }
-<<<<<<< HEAD
     ]
   },
   "include": [
@@ -46,24 +30,8 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-, "app/student/page.jsx", "app/student/layout.jsx", "app/student/Sidebar.jsx"  ],
+, "app/student/Calender/page.jsx", "app/student/ContactSpoc/page.jsx", "app/student/ManageResume/page.jsx", "app/student/Notices/page.jsx", "app/student/PVF/page.jsx", "app/student/Stats/page.jsx"  ],
   "exclude": [
     "node_modules"
   ]
-=======
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-, "app/login/LoginPage.tsx"  ],
-  "exclude": ["node_modules"]
->>>>>>> 2ba3b8fe8d16024817ed44cca7ca549c62421b81
 }

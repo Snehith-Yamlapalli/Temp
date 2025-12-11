@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 
 import FullCalendar from "@fullcalendar/react";
@@ -52,16 +51,3 @@ export default function EventsCalendar() {
     </div>
   );
 }
-=======
-import React from 'react'
-
-const Calender = () => {
-  return (
-    <div>
-      <h1>Calender page</h1>
-    </div>
-  )
-}
-
-export default Calender
->>>>>>> 2ba3b8fe8d16024817ed44cca7ca549c62421b81

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 
 import { useState } from "react"
@@ -95,16 +94,3 @@ const Stats = () => {
 }
 
 export default Stats
-=======
-import React from 'react'
-
-const Stats = () => {
-  return (
-    <div>
-      <h1>Contains the info students who got inters / placement </h1>
-    </div>
-  )
-}
-
-export default Stats
->>>>>>> 2ba3b8fe8d16024817ed44cca7ca549c62421b81
