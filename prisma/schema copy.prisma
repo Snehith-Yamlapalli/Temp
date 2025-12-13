@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+// Enum for drive mode
+enum DriveMode {
+  ONLINE
+  ONSITE
+  HYBRID
+  VIDEO
+  OTHER
+}
+
+model Proforma {
+  id                 Int       @id @default(autoincrement())
+  companyName        String
+  CompanyCategory    String
+  jobRole            String
+  profile            String
+  Location           String
+  CTC                number
+  CTCBase            number
+  CTCStocks          number
+  CTCSignOn          number
+  CTCReLoc           number
+  CTCOth             number
+  Intership          String
+  Intershipstipend   number
+  DriveMode          String
+  cgpaCutoff         Float
+  eligibleBatch      String[]
+  eligibleBranches   String[]   @db.VarChar(191)
+  DriveDates         String[]
+  round1             String
+  round2             String
+  round3             String
+  round4             String
+  Deadline           Date
+  Spoc               String?
+  SpocCont           String
+  jobDescriptionUrl  String?    // public URL or signed URL to download the file
+  jobDescriptionKey  String?    // storage key / blob id (useful to delete / replace)
+  jobDescriptionName String?    // original file name for download / display
+  jobDescriptionSize Int?       // optional size in bytes
+  jobDescriptionMime String?    // mime-type
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([createdAt])
+}

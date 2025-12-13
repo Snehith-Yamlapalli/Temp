@@ -16,60 +16,28 @@ export default function CreateProformaPage() {
   const [busy, setBusy] = useState(false);
 
   async function uploadFileToBlob(file) {
-  const fd = new FormData();
-  fd.append("file", file);
+    const fd = new FormData();
+    fd.append("file", file);
 
-  const res = await fetch("/api/uploads/presign", {
-    method: "POST",
-    body: fd,
-  });
+    const res = await fetch("/api/uploads/presign", {
+      method: "POST",
+      body: fd,
+    });
 
-  if (!res.ok) {
-    const err = await res.json().catch(() => null);
-    throw new Error(err?.error || "Upload failed");
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.error || "Upload failed");
+    }
+
+    return await res.json();
   }
 
-  return await res.json();
-}
-
-
-  // async function uploadFileToBlob(file) 
-  // {
-  //   const presign = await fetch("/api/uploads/presign", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ name: file.name, contentType: file.type, size: file.size }),
-  //   }).then(r => r.json());
-
-  //   if (!presign?.uploadUrl) throw new Error("Presign failed");
-
-  //   // upload directly
-  //   const up = await fetch(presign.uploadUrl, {
-  //     method: "PUT",
-  //     headers: { "Content-Type": file.type },
-  //     body: file,
-  //   });
-  //   if (!up.ok) {
-  //     const txt = await up.text();
-  //     throw new Error("Upload failed: " + txt);
-  //   }
-
-  //   return {
-  //     jobDescriptionUrl: presign.jobDescriptionUrl || presign.uploadUrl,
-  //     jobDescriptionKey: presign.jobDescriptionKey,
-  //     jobDescriptionName: file.name,
-  //     jobDescriptionSize: file.size,
-  //     jobDescriptionMime: file.type || "application/pdf",
-  //   };
-  // }
-
-  async function handleSubmit(e) 
-  {
+  async function handleSubmit(e) {
     e.preventDefault();
     setBusy(true);
     try {
       const auth = getAuth();
-      
+
       const user = auth.currentUser;
       if (!user) {
         alert("Login required");
