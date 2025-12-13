@@ -2,7 +2,8 @@ import React from 'react'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth, db } from './firebase'
 import { setDoc, doc } from 'firebase/firestore'
-import googleImage from './google-signin-button.png';
+import Image from "next/image";
+import googleImage from "./google-signin-button.png";
 
 
 const SignInWithGoogle = () => {
@@ -27,7 +28,7 @@ const SignInWithGoogle = () => {
         <div>
             <p className='continue-p' style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}>--Or continue with--</p>
             <div style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }} onClick={googlelogin}>
-           <img src={googleImage} width="15%" alt="Sign in with Google" />
+                <Image src={googleImage} alt="Sign in with Google" width={200} height={60} />
             </div>
         </div>
     )

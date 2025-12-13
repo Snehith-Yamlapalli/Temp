@@ -44,7 +44,7 @@ const Login = () => {
       <div className='row justify-content-center' style={{ backgroundColor: 'rgb(208, 214, 206)' }}>
         <div className='col-md-6 bg-red p-3 mb-5 d-flex flex-column gap-3 align-items-center'>
           <input type="email" placeholder='Email' className='form-control' onChange={(e) => { setEmail(e.target.value) }} />
-          <input type="password" placeholder='Password' className='form-control' onChange={(e) => { setpassword(e.target.value) }} />
+          <input type="current-password" placeholder='Password' className='form-control' onChange={(e) => { setpassword(e.target.value) }} />
           <input type="submit" className='btn btn-primary' value='Login In' style={{ width: '120px' }} />
           <input type="button" className='btn btn-primary' value='Register' onClick={navreg} />
         </div>

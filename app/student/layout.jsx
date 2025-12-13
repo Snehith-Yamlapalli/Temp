@@ -1,5 +1,5 @@
 import Sidebar from "./Sidebar"
-import AuthGuard from './../Authguard';
+import AuthGuard from '../components/StudentAuthguard';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function RootLayout({ children }) {
