@@ -7,7 +7,7 @@ import { verifyIdTokenFromReq } from "@/lib/firebaseAdmin";
 
 export async function GET() {
   try {
-    const list = await prisma.proforma.findMany({ orderBy: { createdAt: "desc" } });
+    const list = await prisma.proformaN.findMany({ orderBy: { createdAt: "desc" } });
     return NextResponse.json(list);
   } catch (err) {
     console.error("GET /api/proforma error:", err);
@@ -32,20 +32,33 @@ export async function POST(req) {
     }
 
 
-    const created = await prisma.proforma.create({
+    const created = await prisma.proformaN.create({
       data: {
         companyName: body.companyName,
+        CompanyCategory:body.CompanyCategory,
         jobRole: body.jobRole,
-        driveMode: body.DriveMode,
+        profile:body.profile,
+        Location:body.Location,
+        CTC:body.CTC,
+        CTCBase:body.CTCBase,
+        CTCStocks:body.CTCStocks,
+        CTCSignOn:body.CTCSignOn,
+        CTCReLoc:body.CTCReLoc,
+        CTCOth:body.CTCOth,
+        Internship:body.Internship,
+        Internshipstipend:body.Internshipstipend,
+        DriveMode: body.DriveMode,
         cgpaCutoff: body.cgpaCutoff !== undefined && body.cgpaCutoff !== null ? Number(body.cgpaCutoff) : null,
-        tentativeLocation: body.tentativeLocation || null,
-        ctcBreakup: body.ctcBreakup || null,
-        eligibleBatch: Array.isArray(body.eligibleBatch) ? body.eligibleBatch : (body.eligibleBatch ? [body.eligibleBatch] : []),
+        eligibleBatch: body.Batch,
         eligibleBranches: Array.isArray(body.eligibleBranches) ? body.eligibleBranches : (body.eligibleBranches ? [body.eligibleBranches] : []),
-        driveInfo: body.driveInfo || null,
-        assessmentDates: Array.isArray(body.assessmentDates) ? body.assessmentDates.map(d => new Date(d)) : [],
-        deadlineForForm: body.deadlineForForm ? new Date(body.deadlineForForm) : null,
-        spoc: body.spoc || null,
+        DriveDates:Array.isArray(body.DriveDates) ? body.DriveDates : (body.DriveDates ? [body.DriveDates] : []),
+        round1:body.round1,
+        round2:body.round2,
+        round3:body.round3,
+        round4:body.round4,
+        Deadline:body.Deadline ? new Date(body.Deadline) : null,
+        Spoc: body.Spoc|| null,
+        SpocCont:body.SpocCont,
         jobDescriptionUrl: body.jobDescriptionUrl || null,
         jobDescriptionKey: body.jobDescriptionKey || null,
         jobDescriptionName: body.jobDescriptionName || null,

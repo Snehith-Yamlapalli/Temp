@@ -19,7 +19,7 @@ export async function POST(req) {
       addRandomSuffix: true,   // ✅ THIS FIXES THE ERROR
     });
 
-
+    console.log("blob went good")
     return NextResponse.json({
       jobDescriptionUrl: blob.url,
       jobDescriptionKey: blob.pathname,

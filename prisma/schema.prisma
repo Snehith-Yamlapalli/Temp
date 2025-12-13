@@ -15,20 +15,33 @@ enum DriveMode {
   OTHER
 }
 
-model Proforma {
+model ProformaN {
   id                 Int       @id @default(autoincrement())
   companyName        String
+  CompanyCategory    String
   jobRole            String
-  driveMode          DriveMode
-  cgpaCutoff         Float?
-  tentativeLocation  String?
-  ctcBreakup         Json?
-  eligibleBatch      String[]
+  profile            String
+  Location           String
+  CTC                Int
+  CTCBase            Int
+  CTCStocks          Int
+  CTCSignOn          Int
+  CTCReLoc           Int
+  CTCOth             Int
+  Internship         String
+  Internshipstipend  Int
+  DriveMode          String
+  cgpaCutoff         Float
+  eligibleBatch      Int
   eligibleBranches   String[]   @db.VarChar(191)
-  driveInfo          String?
-  assessmentDates    DateTime[]
-  deadlineForForm    DateTime?
-  spoc               String?
+  DriveDates         String[]
+  round1             String
+  round2             String
+  round3             String
+  round4             String
+  Deadline           DateTime
+  Spoc               String?
+  SpocCont           String
   jobDescriptionUrl  String?    // public URL or signed URL to download the file
   jobDescriptionKey  String?    // storage key / blob id (useful to delete / replace)
   jobDescriptionName String?    // original file name for download / display
