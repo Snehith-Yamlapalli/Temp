@@ -58,6 +58,7 @@ export default function Sidebar() {
             </div>
 
             <nav className="nav nav-pills flex-column">
+                <Link href="/TAPS/CompaniesList" className={`nav-link ${isActive("/TAPS/CompaniesList") ? "active" : ""}`} style={{ color: "black" }}>CompaniesList</Link>
                 <Link href="/TAPS/Proforma/create" className={`nav-link ${isActive("/TAPS/Proforma/create") ? "active" : ""}`} style={{ color: "black" }}>Create Proforma</Link>
                 <Link href="/TAPS/Proforma/Edit/:id" className={`nav-link ${isActive("/TAPS/Proforma/Edit/:id") ? "active" : ""}`} style={{ color: "black" }}>Edit Proforma</Link>
                 <Link href="/TAPS/Stats" className={`nav-link ${isActive("/TAPS/Stats") ? "active" : ""}`} style={{ color: "black" }}>Stats</Link>

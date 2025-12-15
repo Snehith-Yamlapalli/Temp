@@ -39,7 +39,7 @@ export default function CreateProformaPage() {
     const fd = new FormData();
     fd.append("file", file);
 
-    const res = await fetch("/api/uploads/presign", {
+    const res = await fetch("/api/uploads", {
       method: "POST",
       body: fd,
     });
@@ -83,11 +83,11 @@ export default function CreateProformaPage() {
         CTCSignOn: CTCSignOn ? Number(CTCSignOn) : null,
         CTCReLoc: CTCReLoc ? Number(CTCReLoc) : null,
         CTCOth: CTCOth ? Number(CTCOth) : null,
-        Internship, 
+        Internship,
         Internshipstipend: Internshipstipend ? Number(Internshipstipend) : 0,
         DriveMode,
         cgpaCutoff: cgpaCutoff ? Number(cgpaCutoff) : null,
-        Batch:Batch ? Number(Batch) : null,
+        Batch: Batch ? Number(Batch) : null,
         eligibleBranches: eligibleBranches ? eligibleBranches.split(",").map(s => s.trim()) : [],
         DriveDates,
         round1, round2, round3, round4,
@@ -348,7 +348,7 @@ export default function CreateProformaPage() {
           <div className="row mt-5 ">
             <div className="col-md-2">
               <h4>Dead Line</h4>
-              <input type="date" className="form-control" value={Deadline} onChange={(e) => setDeadline(e.target.value)} />
+              <input type="datetime-local" className="form-control" value={Deadline} onChange={(e) => setDeadline(e.target.value)} />
             </div>
             <div className="col-md-4">
               <h4>SPOC</h4>

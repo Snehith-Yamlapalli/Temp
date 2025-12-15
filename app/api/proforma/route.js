@@ -7,7 +7,7 @@ import { verifyIdTokenFromReq } from "@/lib/firebaseAdmin";
 
 export async function GET() {
   try {
-    const list = await prisma.proformaN.findMany({ orderBy: { createdAt: "desc" } });
+    const list = await prisma.proformaN.findMany({ orderBy: { createdAt: "asc" } });
     return NextResponse.json(list);
   } catch (err) {
     console.error("GET /api/proforma error:", err);
