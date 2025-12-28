@@ -31,7 +31,7 @@ const page = () => {
   }, []);
 
   function getproforma(id) {
-    router.push(`/student/ProForma/view/${id}`);
+    router.push(`/TAPS/Proforma/Edit/${id}`);
   }
 
 
@@ -59,9 +59,9 @@ const page = () => {
                 <td>{value.companyName}</td>
                 <td>{value.jobRole}</td>
                 <td>{value.profile}</td>
-               <td>{new Date(value.Deadline).toLocaleString()}</td>
+                <td>{new Date(value.Deadline).toLocaleString()}</td>
                 <td style={{ padding: 0 }}>
-                  <button className='btn btn-secondary w-100 h-100 rounded-0' onClick={() => getproforma(value.id)}>View Proforma</button>
+                  <button className='btn btn-secondary w-100 h-100 rounded-0' onClick={() => getproforma(value.id)}>Edit Proforma</button>
                 </td>
               </tr>
             ))}

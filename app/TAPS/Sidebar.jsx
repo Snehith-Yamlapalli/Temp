@@ -60,8 +60,9 @@ export default function Sidebar() {
             <nav className="nav nav-pills flex-column">
                 <Link href="/TAPS/CompaniesList" className={`nav-link ${isActive("/TAPS/CompaniesList") ? "active" : ""}`} style={{ color: "black" }}>CompaniesList</Link>
                 <Link href="/TAPS/Proforma/create" className={`nav-link ${isActive("/TAPS/Proforma/create") ? "active" : ""}`} style={{ color: "black" }}>Create Proforma</Link>
-                <Link href="/TAPS/Proforma/Edit/:id" className={`nav-link ${isActive("/TAPS/Proforma/Edit/:id") ? "active" : ""}`} style={{ color: "black" }}>Edit Proforma</Link>
+                <Link href="/TAPS/Proforma/Edit/:id"  className={`nav-link ${isActive("/TAPS/Proforma/Edit") ? "active" : ""}`} style={{ color: "black" }}>Edit Proforma</Link>
                 <Link href="/TAPS/Stats" className={`nav-link ${isActive("/TAPS/Stats") ? "active" : ""}`} style={{ color: "black" }}>Stats</Link>
+                <Link href="/TAPS/Offers" className={`nav-link ${isActive("/TAPS/Offers") ? "active" : ""}`} style={{ color: "black" }}>Offers</Link>
                 <Link href="/TAPS/Issues" className={`nav-link ${isActive("/TAPS/Issues") ? "active" : ""}`} style={{ color: "black" }}>Issues</Link>
                 <Link href="/TAPS/Calender" className={`nav-link ${isActive("/TAPS/Calender") ? "active" : ""}`} style={{ color: "black" }}>Calendar</Link>
             </nav>

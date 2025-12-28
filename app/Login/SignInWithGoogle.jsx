@@ -20,7 +20,7 @@ const SignInWithGoogle = () => {
                     lastname: '',
                     photo: user.photoURL
                 })
-                window.location.href = '/student'
+                window.location.href = '/student/Home'
             }
         })
     }

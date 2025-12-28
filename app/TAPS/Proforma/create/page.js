@@ -11,7 +11,7 @@ export default function CreateProformaPage() {
   const [CompanyCategory, setCompanyCategory] = useState("")
   const [jobRole, setJobRole] = useState("")
   const [profile, setprofile] = useState("")
-  const [Location, setLocation] = useState("");
+  const [Location, setLocation] = useState([]);
   const [CTC, setCTC] = useState([]);
   const [CTCBase, setCTCBase] = useState([]);
   const [CTCStocks, setCTCStocks] = useState([]);
@@ -22,8 +22,8 @@ export default function CreateProformaPage() {
   const [Internshipstipend, setInternshipStipend] = useState("")
   const [DriveMode, setDriveMode] = useState("");
   const [cgpaCutoff, setCgpaCutoff] = useState("");
-  const [Batch, setBatch] = useState("");
-  const [eligibleBranches, setEligibleBranches] = useState("");
+  const [Batch, setBatch] = useState([]);
+  const [eligibleBranches, setEligibleBranches] = useState([]);
   const [DriveDates, setDriveDates] = useState([]);
   const [round1, setround1] = useState("")
   const [round2, setround2] = useState("")
@@ -39,7 +39,7 @@ export default function CreateProformaPage() {
     const fd = new FormData();
     fd.append("file", file);
 
-    const res = await fetch("/api/uploads", {
+    const res = await fetch("/api/proformauploads", {
       method: "POST",
       body: fd,
     });
@@ -87,7 +87,7 @@ export default function CreateProformaPage() {
         Internshipstipend: Internshipstipend ? Number(Internshipstipend) : 0,
         DriveMode,
         cgpaCutoff: cgpaCutoff ? Number(cgpaCutoff) : null,
-        Batch: Batch ? Number(Batch) : null,
+        Batch: Batch ? Batch.split(",").map(s => s.trim()) : [],
         eligibleBranches: eligibleBranches ? eligibleBranches.split(",").map(s => s.trim()) : [],
         DriveDates,
         round1, round2, round3, round4,
@@ -245,7 +245,7 @@ export default function CreateProformaPage() {
             </div>
             <div className="col-md-2">
               <label>Eligible Batch</label>
-              <input type="number" className="form-control" value={Batch} onChange={(e) => setBatch(e.target.value)} />
+              <input type="text" className="form-control" value={Batch} onChange={(e) => setBatch(e.target.value)} />
             </div>
             <div className="col-md-6">
               <label>Eligible Branches</label>

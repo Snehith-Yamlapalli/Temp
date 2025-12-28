@@ -1,10 +1,15 @@
-// app/api/uploads/presign/route.js
+// app/api/CVuploads/presign/route.js
 import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
-
-export async function POST(req) {
+async function getParams(context) {
+  // context can be a Promise-like in this Next version — await it.
+  const ctx = await context;
+  return ctx.params || {};
+}
+export async function POST(req, context) {
+  const { id } = await getParams(context);
   try {
     const formData = await req.formData();
     const file = formData.get("file");
@@ -16,16 +21,15 @@ export async function POST(req) {
     const blob = await put(file.name, file, {
       access: "public",
       contentType: file.type || "application/pdf",
-      addRandomSuffix: true,   // ✅ THIS FIXES THE ERROR
     });
 
     console.log("blob went good")
     return NextResponse.json({
-      jobDescriptionUrl: blob.url,
-      jobDescriptionKey: blob.pathname,
-      jobDescriptionName: file.name,
-      jobDescriptionSize: file.size,
-      jobDescriptionMime: file.type,
+      [`CV${id}Url`]: blob.url,
+      [`CV${id}Key`]: blob.pathname,
+      [`CV${id}Name`]: file.name,
+      [`CV${id}Size`]: file.size,
+      [`CV${id}Mime`]: file.type,
     });
   } catch (err) {
     console.error("Blob upload failed:", err);

@@ -6,6 +6,7 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
 // Enum for drive mode
 enum DriveMode {
   ONLINE
@@ -15,13 +16,20 @@ enum DriveMode {
   OTHER
 }
 
+enum ApplicationStatus {
+  APPLIED
+  SHORTLISTED
+  REJECTED
+  OFFERED
+}
+
 model ProformaN {
-  id                 Int       @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   companyName        String
   CompanyCategory    String
   jobRole            String
   profile            String
-  Location           String
+  Location           String[]
   CTC                Int
   CTCBase            Int
   CTCStocks          Int
@@ -32,8 +40,8 @@ model ProformaN {
   Internshipstipend  Int
   DriveMode          String
   cgpaCutoff         Float
-  eligibleBatch      Int
-  eligibleBranches   String[]   @db.VarChar(191)
+  eligibleBatch      String[]
+  eligibleBranches   String[] @db.VarChar(191)
   DriveDates         String[]
   round1             String
   round2             String
@@ -42,13 +50,124 @@ model ProformaN {
   Deadline           DateTime
   Spoc               String?
   SpocCont           String
-  jobDescriptionUrl  String?    // public URL or signed URL to download the file
-  jobDescriptionKey  String?    // storage key / blob id (useful to delete / replace)
-  jobDescriptionName String?    // original file name for download / display
-  jobDescriptionSize Int?       // optional size in bytes
-  jobDescriptionMime String?    // mime-type
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  jobDescriptionUrl  String? // public URL or signed URL to download the file
+  jobDescriptionKey  String? // storage key / blob id (useful to delete / replace)
+  jobDescriptionName String? // original file name for download / display
+  jobDescriptionSize Int? // optional size in bytes
+  jobDescriptionMime String? // mime-type
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   @@index([createdAt])
+}
+
+model Student {
+  id             String   @id
+  instituteEmail String   @unique
+  name           String
+  branch         String
+  degree         String
+  batch          Int
+  CGPA           Float?
+  cgpaVerified   Boolean @default(false)
+  createdAt      DateTime @default(now())
+  InternApply    Boolean @default(false)
+  InternOffer    Boolean @default(false)
+  FTEApply       Boolean @default(false)
+  FTEOffer       Boolean @default(false)
+
+  applications Application[] // ✅ REQUIRED back relation
+}
+
+model Application {
+  id String @id @default(uuid())
+
+  studentId String
+  profileId String
+
+  status    ApplicationStatus @default(APPLIED)
+  appliedAt DateTime          @default(now())
+
+  // snapshot data at time of apply
+  branchAtApply    String
+  degreeAtApply    String
+  batchAtApply     Int
+  resumeUrlAtApply String?
+
+  remarks String?
+
+  student Student @relation(fields: [studentId], references: [id])
+  profile Profile @relation(fields: [profileId], references: [id])
+
+  @@unique([studentId, profileId])
+}
+
+model Profile {
+  id          String @id @default(uuid())
+  companyId   String
+  profileName String
+
+  CGPA            Float?
+  allowedBranches String[]
+  allowedDegrees  String[]
+  allowedBatches  Int[]
+  deadline        DateTime
+
+  jobDescription    String
+  location          String?
+  ctc               String?
+  numberOfPositions Int?
+
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company      Company       @relation(fields: [companyId], references: [id])
+  applications Application[] // ✅ REQUIRED back relation
+}
+
+model Company {
+  id String @id @default(uuid())
+
+  name    String
+  website String?
+
+  // HR
+  HRName      String
+  Designation String
+  Email       String
+
+  // ownership
+  createdBy String // TPO user id
+
+  // timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // relations
+  profiles Profile[]
+}
+model FTEP {
+  id        String   @id @default(uuid())
+  rollno    String
+  name      String
+  degree    String
+  branch    String
+  company   String
+  role      String
+  year      Int      // placement year (e.g. 2025)
+  createdAt DateTime @default(now())
+  @@unique([rollno, year])
+}
+model Intern {
+  id        String   @id @default(uuid())
+  rollno    String
+  name      String
+  degree    String
+  branch    String
+  company   String
+  role      String
+  year      Int      // placement year (e.g. 2025)
+  createdAt DateTime @default(now())
+  @@unique([rollno, year])
 }

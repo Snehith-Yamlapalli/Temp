@@ -58,6 +58,7 @@ export default function Sidebar() {
       </div>
 
       <nav className="nav nav-pills flex-column">
+        <Link href="/student/Home" className={`nav-link ${isActive("/student/Home") ? "active" : ""}`} style={{ color: "black" }}>Home</Link>
         <Link href="/student/Stats" className={`nav-link ${isActive("/student/Stats") ? "active" : ""}`} style={{ color: "black" }}>Stats</Link>
         <Link href="/student/Notices" className={`nav-link ${isActive("/student/Notices") ? "active" : ""}`} style={{ color: "black" }}>Notices</Link>
         <Link href="/student/ManageResume" className={`nav-link ${isActive("/student/ManageResume") ? "active" : ""}`} style={{ color: "black" }}>Manage Resume</Link>

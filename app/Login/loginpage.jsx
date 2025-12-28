@@ -28,7 +28,7 @@ const Login = () => {
         return null;
       }
 
-      router.push("/student");
+      router.push("/student/Home");
     } catch (error) {
       console.log(error.message)
       alert(error)

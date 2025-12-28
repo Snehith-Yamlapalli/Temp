@@ -11,14 +11,19 @@ const ViewProForma = () => {
   const [showJD, setShowJD] = useState(false)
   const [data, setdata] = useState(null)
   const { id } = useParams();
+  const [isExpired, setIsExpired] = useState(false);
 
   async function getData() {
     setloading(true);
-    const res = await fetch("/api/proforma");
-    const wholedata = await res.json()
-    const selected = wholedata.find(value => value.id === Number(id));
+    const res = await fetch(`/api/proforma/${id}`);
+    const selected = await res.json()
     setdata(selected)
-    console.log(selected)
+
+    const expired = Date.now() > new Date(selected.Deadline).getTime();
+    setIsExpired(expired);
+
+    // should check for Student CGPA,Branch,Batch 
+
     setloading(false)
   }
   useEffect(() => {
@@ -173,7 +178,7 @@ const ViewProForma = () => {
         <div className="row mt-5 ">
           <div className="col-md-2">
             <h4>Dead Line</h4>
-            <input type="datetime-local" className="form-control" value={new Date(data.Deadline).toISOString().slice(0, 16)} readOnly={true} />
+            <input type="datetime-local" className="form-control" value={data?.Deadline ? new Date(data.Deadline).toISOString().slice(0, 16) : ""} readOnly={true} />
           </div>
           <div className="col-md-4">
             <h4>SPOC</h4>
@@ -188,7 +193,7 @@ const ViewProForma = () => {
         <div className="row">
           <div className="col-12 d-flex justify-content-center">
             <input type="button" className="btn btn-outline-primary m-5" onClick={() => setShowJD(prev => !prev)} value={!showJD ? "Show JD" : "Close JD"} />
-            <button className="btn btn-primary m-5" onClick={ApplyforJob}>Apply</button>
+            <button className="btn btn-primary m-5" disabled={isExpired} onClick={ApplyforJob}>Apply</button>
           </div>
         </div>
 
