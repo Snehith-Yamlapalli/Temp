@@ -66,11 +66,11 @@ export async function PUT(req, context) {
         Deadline:body.Deadline ? new Date(body.Deadline) : null,
         Spoc: body.Spoc|| null,
         SpocCont:body.SpocCont,
-        jobDescriptionUrl: body.jobDescriptionUrl || null,
-        jobDescriptionKey: body.jobDescriptionKey || null,
-        jobDescriptionName: body.jobDescriptionName || null,
-        jobDescriptionSize: body.jobDescriptionSize ? Number(body.jobDescriptionSize) : null,
-        jobDescriptionMime: body.jobDescriptionMime || null,
+        DescriptionUrl: body.DescriptionUrl || null,
+        DescriptionKey: body.DescriptionKey || null,
+        DescriptionName: body.DescriptionName || null,
+        DescriptionSize: body.DescriptionSize ? Number(body.DescriptionSize) : null,
+        DescriptionMime: body.DescriptionMime || null,
       },
     });
 

@@ -91,9 +91,9 @@ export default function EditProformaPage() {
     setJDURl(data.jobDescriptionUrl)
 
     setExistingMeta({
-      jobDescriptionUrl: data.jobDescriptionUrl,
-      jobDescriptionKey: data.jobDescriptionKey,
-      jobDescriptionName: data.jobDescriptionName,
+      DescriptionUrl: data.DescriptionUrl,
+      DescriptionKey: data.DescriptionKey,
+      DescriptionName: data.DescriptionName,
     });
 
     setLoading(false);
@@ -130,11 +130,11 @@ export default function EditProformaPage() {
     }
 
     return {
-      jobDescriptionUrl: presign.jobDescriptionUrl || presign.uploadUrl,
-      jobDescriptionKey: presign.jobDescriptionKey,
-      jobDescriptionName: file.name,
-      jobDescriptionSize: file.size,
-      jobDescriptionMime: file.type || "application/pdf",
+      DescriptionUrl: presign.DescriptionUrl || presign.uploadUrl,
+      DescriptionKey: presign.DescriptionKey,
+      DescriptionName: file.name,
+      DescriptionSize: file.size,
+      DescriptionMime: file.type || "application/pdf",
     };
   }
 

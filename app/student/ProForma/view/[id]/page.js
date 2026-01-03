@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from '@/app/components/Spinner'
-
+import { getAuth } from "firebase/auth";
 
 const ViewProForma = () => {
 
@@ -31,8 +31,13 @@ const ViewProForma = () => {
   }, [id])
   if (loading || !data) return <Spinner />
 
-  function ApplyforJob() {
-    alert("OK Bro, Your Job application sent!")
+  async function ApplyforJob(props) {
+    const auth = getAuth()
+    const user = auth.currentUser
+    const rollno = (user.email).slice(2, 11).toLocaleUpperCase()
+    console.log("rollno is",rollno,"  props ",props)
+    
+    
   }
 
   return (
@@ -193,7 +198,9 @@ const ViewProForma = () => {
         <div className="row">
           <div className="col-12 d-flex justify-content-center">
             <input type="button" className="btn btn-outline-primary m-5" onClick={() => setShowJD(prev => !prev)} value={!showJD ? "Show JD" : "Close JD"} />
-            <button className="btn btn-primary m-5" disabled={isExpired} onClick={ApplyforJob}>Apply</button>
+            <button className="btn btn-primary m-5" disabled={isExpired} onClick={() => ApplyforJob(1)}>Apply with CV1</button>
+            <button className="btn btn-primary m-5" disabled={isExpired} onClick={() => ApplyforJob(2)}>Apply with CV2</button>
+            <button className="btn btn-primary m-5" disabled={isExpired} onClick={() => ApplyforJob(3)}>Apply with CV3</button>
           </div>
         </div>
 

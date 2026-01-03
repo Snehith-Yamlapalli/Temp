@@ -21,11 +21,11 @@ export async function POST(req) {
 
     console.log("blob went good")
     return NextResponse.json({
-      jobDescriptionUrl: blob.url,
-      jobDescriptionKey: blob.pathname,
-      jobDescriptionName: file.name,
-      jobDescriptionSize: file.size,
-      jobDescriptionMime: file.type,
+      DescriptionUrl: blob.url,
+      DescriptionKey: blob.pathname,
+      DescriptionName: file.name,
+      DescriptionSize: file.size,
+      DescriptionMime: file.type,
     });
   } catch (err) {
     console.error("Blob upload failed:", err);

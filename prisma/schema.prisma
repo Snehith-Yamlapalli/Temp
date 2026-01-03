@@ -1,6 +1,5 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -50,11 +49,11 @@ model ProformaN {
   Deadline           DateTime
   Spoc               String?
   SpocCont           String
-  jobDescriptionUrl  String? // public URL or signed URL to download the file
-  jobDescriptionKey  String? // storage key / blob id (useful to delete / replace)
-  jobDescriptionName String? // original file name for download / display
-  jobDescriptionSize Int? // optional size in bytes
-  jobDescriptionMime String? // mime-type
+  DescriptionUrl  String? // public URL or signed URL to download the file
+  DescriptionKey  String? // storage key / blob id (useful to delete / replace)
+  DescriptionName String? // original file name for download / display
+  DescriptionSize Int? // optional size in bytes
+  DescriptionMime String? // mime-type
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
@@ -69,7 +68,17 @@ model Student {
   degree         String
   batch          Int
   CGPA           Float?
+  cgpastudentupdate Boolean @default(false)
   cgpaVerified   Boolean @default(false)
+  CV1Url         String? 
+  CV1Key         String? 
+  CV1Name        String?
+  CV2Url         String? 
+  CV2Key         String? 
+  CV2Name        String?
+  CV3Url         String? 
+  CV3Key         String? 
+  CV3Name        String?
   createdAt      DateTime @default(now())
   InternApply    Boolean @default(false)
   InternOffer    Boolean @default(false)
@@ -97,33 +106,8 @@ model Application {
   remarks String?
 
   student Student @relation(fields: [studentId], references: [id])
-  profile Profile @relation(fields: [profileId], references: [id])
 
-  @@unique([studentId, profileId])
-}
-
-model Profile {
-  id          String @id @default(uuid())
-  companyId   String
-  profileName String
-
-  CGPA            Float?
-  allowedBranches String[]
-  allowedDegrees  String[]
-  allowedBatches  Int[]
-  deadline        DateTime
-
-  jobDescription    String
-  location          String?
-  ctc               String?
-  numberOfPositions Int?
-
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  company      Company       @relation(fields: [companyId], references: [id])
-  applications Application[] // ✅ REQUIRED back relation
+  @@unique([studentId])
 }
 
 model Company {
@@ -132,20 +116,14 @@ model Company {
   name    String
   website String?
 
-  // HR
   HRName      String
   Designation String
   Email       String
 
-  // ownership
   createdBy String // TPO user id
 
-  // timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  // relations
-  profiles Profile[]
 }
 model FTEP {
   id        String   @id @default(uuid())
