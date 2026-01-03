@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import { getAuth } from "firebase/auth";
 
 const OffersPage = () => {
-  const [rollno, setrollno] = useState()
-  const [name, setname] = useState()
-  const [company, setcompany] = useState()
-  const [degree, setdegree] = useState()
-  const [branch, setbranch] = useState()
-  const [role, setrole] = useState()
-  const [tag, settag] = useState()
+  const [rollno, setrollno] = useState("")
+  const [name, setname] = useState("")
+  const [company, setcompany] = useState("")
+  const [degree, setdegree] = useState("")
+  const [branch, setbranch] = useState("")
+  const [role, setrole] = useState("")
+  const [tag, settag] = useState("")
 
   async function handleFTE() {
     try {
@@ -55,7 +55,14 @@ const OffersPage = () => {
       }
 
       const created = await res.json();
+      setname("")
+      setbranch("")
+      setcompany("")
+      setdegree("")
+      setrollno("")
+      setrole("")
       alert("New Data added");
+
     } catch (err) {
       console.error(err);
       alert("Create failed: " + (err.message || err));
@@ -72,7 +79,6 @@ const OffersPage = () => {
         return;
       }
       const idToken = await user.getIdToken();
-
 
       const today = new Date()
       const year = today.getFullYear()
@@ -106,6 +112,13 @@ const OffersPage = () => {
 
       const created = await res.json();
       alert("New Data added");
+      setname("")
+      setbranch("")
+      setcompany("")
+      setdegree("")
+      setrollno("")
+      setrole("")
+
     } catch (err) {
       console.error(err);
       alert("Create failed: " + (err.message || err));
@@ -132,27 +145,27 @@ const OffersPage = () => {
           </div>
           <div className="col-md-8 m-3">
             <label>Student Name</label>
-            <input type="text" className="form-control" onChange={(e) => setname(e.target.value)} />
+            <input type="text" className="form-control" value={name} onChange={(e) => setname(e.target.value)} />
           </div>
           <div className="col-md-4 m-3">
             <label>Roll Number</label>
-            <input type="text" className="form-control" onChange={(e) => setrollno(e.target.value)} />
+            <input type="text" className="form-control" value={rollno} onChange={(e) => setrollno(e.target.value)} />
           </div>
           <div className="col-md-3 m-3">
             <label>Degree</label>
-            <input type="text" className="form-control" onChange={(e) => setdegree(e.target.value)} />
+            <input type="text" className="form-control" value={degree} onChange={(e) => setdegree(e.target.value)} />
           </div>
           <div className="col-md-3 m-3">
             <label>Branch</label>
-            <input type="text" className="form-control" onChange={(e) => setbranch(e.target.value)} />
+            <input type="text" className="form-control" value={branch} onChange={(e) => setbranch(e.target.value)} />
           </div>
           <div className="col-md-5 m-3">
             <label>Company Name </label>
-            <input type="text" className="form-control" onChange={(e) => setcompany(e.target.value)} />
+            <input type="text" className="form-control" value={company} onChange={(e) => setcompany(e.target.value)} />
           </div>
           <div className="col-md-5 m-3">
             <label>Role Offered </label>
-            <input type="text" className="form-control" onChange={(e) => setrole(e.target.value)} />
+            <input type="text" className="form-control" value={role} onChange={(e) => setrole(e.target.value)} />
           </div>
           <button className='btn btn-primary' onClick={handleFTE}>Add Data</button>
         </div>
@@ -164,27 +177,27 @@ const OffersPage = () => {
           </div>
           <div className="col-md-8 m-3">
             <label>Student Name</label>
-            <input type="text" className="form-control" onChange={(e) => setname(e.target.value)} />
+            <input type="text" className="form-control" value={name} onChange={(e) => setname(e.target.value)} />
           </div>
           <div className="col-md-4 m-3">
             <label>Roll Number</label>
-            <input type="text" className="form-control" onChange={(e) => setrollno(e.target.value)} />
+            <input type="text" className="form-control" value={rollno} onChange={(e) => setrollno(e.target.value)} />
           </div>
           <div className="col-md-3 m-3">
             <label>Degree</label>
-            <input type="text" className="form-control" onChange={(e) => setdegree(e.target.value)} />
+            <input type="text" className="form-control" value={degree} onChange={(e) => setdegree(e.target.value)} />
           </div>
           <div className="col-md-3 m-3">
             <label>Branch</label>
-            <input type="text" className="form-control" onChange={(e) => setbranch(e.target.value)} />
+            <input type="text" className="form-control" value={branch} onChange={(e) => setbranch(e.target.value)} />
           </div>
           <div className="col-md-5 m-3">
             <label>Company Name </label>
-            <input type="text" className="form-control" onChange={(e) => setcompany(e.target.value)} />
+            <input type="text" className="form-control" value={company} onChange={(e) => setcompany(e.target.value)} />
           </div>
           <div className="col-md-5 m-3">
             <label>Role Offered </label>
-            <input type="text" className="form-control" onChange={(e) => setrole(e.target.value)} />
+            <input type="text" className="form-control" value={role} onChange={(e) => setrole(e.target.value)} />
           </div>
           <button className='btn btn-primary' onClick={handleintern}>Add Data</button>
         </div>

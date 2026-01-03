@@ -13,11 +13,11 @@ async function getParams(context) {
 
 export async function GET(req, context) {
   const { id } = await getParams(context);
-  const numericId = Number(id);
-  if (Number.isNaN(numericId)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
+  console.log("ROLL NO IS ", id)
+
 
   try {
-    const p = await prisma.Application.findUnique({ where: { id: numericId } });
+    const p = await prisma.Application.findMany({ where: { studentId: id } });
     if (!p) return NextResponse.json({ error: "Not found" }, { status: 404 });
     return NextResponse.json(p);
   } catch (err) {
@@ -27,9 +27,9 @@ export async function GET(req, context) {
 }
 
 
-export async function POST(req,context) {
-     const { Id } = await getParams(context);
-     const numericId = Number(Id);
+export async function POST(req, context) {
+  const { Id } = await getParams(context);
+  const numericId = Number(Id);
   if (Number.isNaN(numericId)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
 
 
@@ -52,15 +52,15 @@ export async function POST(req,context) {
     const created = await prisma.Application.create({
       data: {
         id: body.id,
-        studentId:body.studentId,
+        studentId: body.studentId,
         profileId: body.profileId,
-        status:body.status,
-        appliedAt:body.appliedAt,
-        branchAtApply:body.branchAtApply,
-        degreeAtApply:body.degreeAtApply,
-        batchAtApply:body.batchAtApply,
-        resumeUrlAtApply:body.resumeUrlAtApply,
-        },
+        status: body.status,
+        appliedAt: body.appliedAt,
+        branchAtApply: body.branchAtApply,
+        degreeAtApply: body.degreeAtApply,
+        batchAtApply: body.batchAtApply,
+        resumeUrlAtApply: body.resumeUrlAtApply,
+      },
     });
 
     return NextResponse.json(created, { status: 201 });
@@ -71,78 +71,42 @@ export async function POST(req,context) {
 }
 
 
-
-
-
-export async function PUT(req, context) {
-  const { id } = await getParams(context);
-  const numericId = Number(id);
-  if (Number.isNaN(numericId)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
-
-  const decoded = await verifyIdTokenFromReq(req);
-  if (!decoded) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (decoded.email !== "taps@nitw.ac.in") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-
+export async function DELETE(req, { params }) {
   try {
-    const body = await req.json();
+    const { id } = await params; // applicationId
+    if (!id) {
+      return NextResponse.json(
+        { error: "Application id required" },
+        { status: 400 }
+      );
+    }
 
-    const updated = await prisma.Application.update({
-      where: { id: numericId },
-      data: {
-        companyName: body.companyName,
-        CompanyCategory:body.CompanyCategory,
-        jobRole: body.jobRole,
-        profile:body.profile,
-        Location:body.Location,
-        CTC:body.CTC,
-        CTCBase:body.CTCBase,
-        CTCStocks:body.CTCStocks !== undefined && body.CTCStocks !== ""? Number(body.CTCStocks): null,
-        CTCSignOn:body.CTCSignOn !== undefined && body.CTCSignOn !== ""? Number(body.CTCSignOn): null,
-        CTCReLoc:body.CTCReLoc !== undefined && body.CTCReLoc !== ""? Number(body.CTCReLoc): null,
-        CTCOth:body.CTCOth !== undefined && body.CTCOth !== ""? Number(body.CTCOth): null,
-        Internship:body.Internship,
-       Internshipstipend:body.Internshipstipend !== undefined && body.Internshipstipend !== ""? Number(body.Internshipstipend): null,
-        DriveMode: body.DriveMode,
-        cgpaCutoff: body.cgpaCutoff !== undefined && body.cgpaCutoff !== null ? Number(body.cgpaCutoff) : null,
-        eligibleBatch: body.Batch,
-        eligibleBranches: Array.isArray(body.eligibleBranches) ? body.eligibleBranches : (body.eligibleBranches ? [body.eligibleBranches] : []),
-        DriveDates:Array.isArray(body.DriveDates) ? body.DriveDates : (body.DriveDates ? [body.DriveDates] : []),
-        round1:body.round1,
-        round2:body.round2,
-        round3:body.round3,
-        round4:body.round4,
-        Deadline:body.Deadline ? new Date(body.Deadline) : null,
-        Spoc: body.Spoc|| null,
-        SpocCont:body.SpocCont,
-        jobDescriptionUrl: body.jobDescriptionUrl || null,
-        jobDescriptionKey: body.jobDescriptionKey || null,
-        jobDescriptionName: body.jobDescriptionName || null,
-        jobDescriptionSize: body.jobDescriptionSize ? Number(body.jobDescriptionSize) : null,
-        jobDescriptionMime: body.jobDescriptionMime || null,
-      },
+    // Optional: check if application exists
+    const existing = await prisma.Application.findUnique({
+      where: { id },
     });
 
-    return NextResponse.json(updated);
+    if (!existing) {
+      return NextResponse.json(
+        { error: "Application not found" },
+        { status: 404 }
+      );
+    }
+
+    await prisma.Application.delete({
+      where: { id },
+    });
+
+    return NextResponse.json(
+      { message: "Application cancelled successfully" },
+      { status: 200 }
+    );
+
   } catch (err) {
-    console.error("PUT /api/applications/[id] error:", err);
-    return NextResponse.json({ error: "DB update error" }, { status: 500 });
-  }
-}
-
-export async function DELETE(req, context) {
-  const { id } = await getParams(context);
-  const numericId = Number(id);
-  if (Number.isNaN(numericId)) return NextResponse.json({ error: "Invalid id" }, { status: 400 });
-
-  const decoded = await verifyIdTokenFromReq(req);
-  if (!decoded) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  if (decoded.email !== "taps@nitw.ac.in") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-
-  try {
-    await prisma.Application.delete({ where: { id: numericId } });
-    return new Response(null, { status: 204 });
-  } catch (err) {
-    console.error("DELETE /api/proforma/[id] error:", err);
-    return NextResponse.json({ error: "DB delete error" }, { status: 500 });
+    console.error("DELETE application error:", err);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

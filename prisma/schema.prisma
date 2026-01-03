@@ -91,12 +91,16 @@ model Student {
 model Application {
   id String @id @default(uuid())
 
+  Name     String
   studentId String
-  profileId String
+  Company String
 
   status    ApplicationStatus @default(APPLIED)
   appliedAt DateTime          @default(now())
-
+  role      String
+  profile   String
+  cgpa      Float
+  ResumeNo  Int?
   // snapshot data at time of apply
   branchAtApply    String
   degreeAtApply    String
@@ -107,7 +111,7 @@ model Application {
 
   student Student @relation(fields: [studentId], references: [id])
 
-  @@unique([studentId])
+  @@unique([studentId, Company])
 }
 
 model Company {

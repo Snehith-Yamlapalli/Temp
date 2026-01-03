@@ -15,6 +15,7 @@ export async function GET(req, context) {
     const params = await context.params; // params is async
     const rollno = params.id;            // ✅ id → rollno
 
+    
     try {
         const student = await prisma.Student.findUnique({
             where: { id: rollno },

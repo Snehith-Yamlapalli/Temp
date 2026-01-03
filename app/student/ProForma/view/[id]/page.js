@@ -4,14 +4,17 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Spinner from '@/app/components/Spinner'
 import { getAuth } from "firebase/auth";
+import { useRouter } from "next/navigation"
 
 const ViewProForma = () => {
-
+  const router = new useRouter()
   const [loading, setloading] = useState(false)
   const [showJD, setShowJD] = useState(false)
   const [data, setdata] = useState(null)
+  const [studentdata, setstudentdata] = useState(null)
   const { id } = useParams();
   const [isExpired, setIsExpired] = useState(false);
+  const [applying, setapplying] = useState(false)
 
   async function getData() {
     setloading(true);
@@ -22,7 +25,13 @@ const ViewProForma = () => {
     const expired = Date.now() > new Date(selected.Deadline).getTime();
     setIsExpired(expired);
 
-    // should check for Student CGPA,Branch,Batch 
+    const auth = getAuth()
+    const user = auth.currentUser
+    const rollno = (user.email).slice(2, 11).toLocaleUpperCase()
+    const stres = await fetch(`/api/studentDetails/${rollno}`)
+    const stdata = await stres.json()
+    setstudentdata(stdata)
+    console.log("rollno is", rollno, "  props ", "PROFORMA ID ", id)
 
     setloading(false)
   }
@@ -32,12 +41,60 @@ const ViewProForma = () => {
   if (loading || !data) return <Spinner />
 
   async function ApplyforJob(props) {
-    const auth = getAuth()
-    const user = auth.currentUser
-    const rollno = (user.email).slice(2, 11).toLocaleUpperCase()
-    console.log("rollno is",rollno,"  props ",props)
-    
-    
+    setapplying(true)
+    // now apply 
+    const companyname = data.companyName
+    const role = data.jobRole
+    const profile = data.profile
+    const branch = studentdata.branch
+    const degree = studentdata.degree
+    const batch = studentdata.batch
+    const name = studentdata.name
+    const rollno = studentdata.id
+    const resume = studentdata[`CV${props}Url`]
+    const cgpa = studentdata.CGPA
+    const num = props
+    const payload = {
+      name,
+      rollno,
+      companyname,
+      role,
+      profile,
+      branch,
+      degree,
+      batch,
+      resume,
+      cgpa,
+      num
+    }
+
+    const res = await fetch("/api/applications", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    let fault = null;
+    try {
+      fault = await res.json(); // safe attempt
+    } catch {
+      fault = null;
+    }
+
+    if (!res.ok) {
+      if (res.status === 409) {
+        alert("You already applied to this company");
+        router.push("/student/Applications")
+        return;
+      }
+
+      alert(fault?.error || "Something went wrong");
+      return;
+    }
+
+    alert("Applied successfully");
+    setapplying(false)
+    router.push("/student/Applications")
   }
 
   return (
@@ -198,9 +255,9 @@ const ViewProForma = () => {
         <div className="row">
           <div className="col-12 d-flex justify-content-center">
             <input type="button" className="btn btn-outline-primary m-5" onClick={() => setShowJD(prev => !prev)} value={!showJD ? "Show JD" : "Close JD"} />
-            <button className="btn btn-primary m-5" disabled={isExpired} onClick={() => ApplyforJob(1)}>Apply with CV1</button>
-            <button className="btn btn-primary m-5" disabled={isExpired} onClick={() => ApplyforJob(2)}>Apply with CV2</button>
-            <button className="btn btn-primary m-5" disabled={isExpired} onClick={() => ApplyforJob(3)}>Apply with CV3</button>
+            <button className="btn btn-primary m-5" disabled={isExpired || applying} onClick={() => ApplyforJob(1)}>{applying ? "Applying" : "Apply with CV1"}</button>
+            <button className="btn btn-primary m-5" disabled={isExpired || applying} onClick={() => ApplyforJob(2)}>{applying ? "Applying" : "Apply with CV2"}</button>
+            <button className="btn btn-primary m-5" disabled={isExpired || applying} onClick={() => ApplyforJob(3)}>{applying ? "Applying" : "Apply with CV3"}</button>
           </div>
         </div>
 

@@ -130,7 +130,7 @@ export default function ManageResumeImproved() {
           <span className="visually-hidden">Loading...</span>
         </div>
       )}
-cl
+
       {/* ------ CV Slot 1 ------ */}
       <div className='row align-items-center mt-4'>
         <div className='col-md-6'>
